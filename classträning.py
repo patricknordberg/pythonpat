@@ -1,12 +1,26 @@
 import time
 
-print("Initializing specs.", end="")
-time.sleep(1)
-print(".",end="")
-time.sleep(1)
-print(".")
-time.sleep(1.5)
-print("")
+
+def loading():
+    load_time = "."
+    while True:
+        if load_time == "....":
+            load_time = "."
+            break
+        else:
+            print(".", end="")
+            load_time += "."
+            time.sleep(1)
+        print("")
+
+
+
+
+print(f"Initializing specs"), (loading())
+
+
+
+
 class Ratt:
     rattutslag = 0
 
@@ -44,12 +58,7 @@ class Motor:
             print(f"You can begin to drive...")
         else:
             self.turned_on = True
-            print("Engine is turning on.", end="")
-            time.sleep(1)
-            print(".", end="")
-            time.sleep(1)
-            print(". ")
-            print("")
+            print("Engine is turning on.", loading())
             time.sleep(1)
             print(f"Engine is now on")
             time.sleep(1)
@@ -58,13 +67,8 @@ class Motor:
     def engine_off(self):
         if self.turned_on:
             self.turned_on = False
-            print("Engine is turning off.", end="")
-            time.sleep(1)
-            print(".", end="")
-            time.sleep(1)
-            print(". ")
+            print("Engine is turning off."), (loading())
 
-            print("")
             time.sleep(1)
             print(f"Engine is now off")
         else:
@@ -102,10 +106,11 @@ class Bil:
 
 #Här skapar du dina bilar
 bilar = []
+bilar = {}
 bmw = Bil("BMW","blue",
           Performance(374, "M440i", 285, 4.3),
           Interior("4-seater", "black", "alcantara"))
-bilar.append("BMW")
+bilar.append(bmw.brand)
 
 print("")
 print("...")
@@ -115,7 +120,7 @@ print("")
 volvo = Bil("Volvo", "white",
             Performance(256, "T5", 250, 7.5),
             Interior("5-seater", "black", "leather"))
-bilar.append("Volvo")
+bilar.append(volvo.brand)
 
 print("")
 print("...")
@@ -123,58 +128,46 @@ time.sleep(1.5)
 print("")
 #Här kör du din bil
 
+def drive_car():
+    bilar.turn_forward()
+    time.sleep(1.5)
+    bilar.turn_right()
+    time.sleep(1.5)
+    bilar.turn_left()
+    time.sleep(1.5)
+    bilar.turn_park()
+    time.sleep(1.5)
+    print("")
+    bilar.motor.engine_off()
+
+
 print(f"Available cars: {bilar}")
 choose_car = input("Which car would you like to drive?: ")
+
 print("")
 for car in bilar:
     if car == choose_car:
         print(f"The {choose_car} has now been chosen")
-        print("Entering.", end="")
-        time.sleep(1)
-        print(".", end="")
-        time.sleep(1)
-        print(". ")
-        time.sleep(1)
+        print("Entering"), (loading())
+
+def chosen_car():
+    if choose_car in bilar:
+        turn_on_engine = input("Would you like to turn the engine on?: ")
+        if turn_on_engine == "Yes":
+            Motor.turned_on = True
+        print("")
+        choose_car.engine_on()
+        time.sleep(1.5)
         print("")
 
-if choose_car == "BMW":
-    turn_on_engine = input("Would you like to turn the engine on?: ")
-    if turn_on_engine == "Yes":
-        turned_on = True
-    print("")
-    bmw.motor.engine_on()
-    time.sleep(1.5)
-    print("")
-    bmw.turn_forward()
-    time.sleep(1.5)
-    bmw.turn_right()
-    time.sleep(1.5)
-    bmw.turn_left()
-    time.sleep(1.5)
-    bmw.turn_park()
-    time.sleep(1.5)
-    print("")
-    bmw.motor.engine_off()
+    else:
+        print(f"That car is not available")
+
+chosen_car()
 
 
-if choose_car == "Volvo":
-    turn_on_engine = input("Would you like to turn the engine on?: ")
-    if turn_on_engine == "Yes":
-        turned_on = True
-    print("")
-    volvo.motor.engine_on()
-    time.sleep(1.5)
-    print("")
-    volvo.turn_forward()
-    time.sleep(1.5)
-    volvo.turn_right()
-    time.sleep(1.5)
-    volvo.turn_left()
-    time.sleep(1.5)
-    volvo.turn_park()
-    time.sleep(1.5)
-    print("")
-    volvo.motor.engine_off()
+
+
 
 time.sleep(1)
 print("Thank you for driving!")
