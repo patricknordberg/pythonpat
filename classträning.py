@@ -14,15 +14,20 @@ def loading():
         print("")
 
 
-
-
 print(f"Initializing specs"), (loading())
-
-
 
 
 class Ratt:
     rattutslag = 0
+
+    def i_did_turn(self):
+        if self.rattutslag == 0:
+            print("You are now facing forward")
+        elif self.rattutslag > 0:
+            print("You are now turning right")
+        else:
+            print("You are now turning left")
+
 
 class Interior:
     def __init__(self, seat: str, color: str, material: str):
@@ -34,6 +39,7 @@ class Interior:
 
         self.material = material
         print(f"The material of the seats is {material}")
+
 
 class Performance:
     def __init__(self, horsepower: int, engine_type: str, top_speed: int, acceleration: float):
@@ -49,6 +55,7 @@ class Performance:
         self.acceleration = acceleration
         print(f"The time from 0-100 is {acceleration} seconds")
 
+
 class Motor:
     turned_on = False
 
@@ -58,7 +65,8 @@ class Motor:
             print(f"You can begin to drive...")
         else:
             self.turned_on = True
-            print("Engine is turning on.", loading())
+            print("Engine is turning on")
+            loading()
             time.sleep(1)
             print(f"Engine is now on")
             time.sleep(1)
@@ -74,10 +82,10 @@ class Motor:
         else:
             print(f"The engine is already off...")
 
+
 class Bil:
     ratt = Ratt()
     motor = Motor()
-
 
     def __init__(self, brand: str, color: str, performance: Performance, interior: Interior):
         self.brand = brand
@@ -87,39 +95,41 @@ class Bil:
         self.interior = interior
         self.turned_on: bool = False
 
+    def turn_right(self, degree):
+        self.ratt.rattutslag = degree
+        self.ratt.i_did_turn()
 
-    def turn_right(self):
-        self.ratt.rattutslag = 1
-        print(f"You are now turning right")
-
-    def turn_left(self):
-        self.ratt.rattutslag = -1
-        print(f"You are now turning left")
+    def turn_left(self, degree):
+        self.ratt.rattutslag = -degree
+        self.ratt.i_did_turn()
 
     def turn_forward(self):
-        self.ratt.rattutslag = 0
-        print(f"You are now facing forward")
-
-    def turn_park(self):
-        self.ratt.rattutslag = 2
-        print(f"You are now parked")
+        self.turn_right(0)
 
     def drive_car(self):
         self.turn_forward()
         time.sleep(1.5)
-        self.turn_right()
+        self.turn_right(90)
         time.sleep(1.5)
-        self.turn_left()
-        time.sleep(1.5)
-        self.turn_park()
+        self.turn_left(90)
         time.sleep(1.5)
         print("")
         self.motor.engine_off()
 
-#Här skapar du dina bilar
+    def aktivitet(self):
+        turn_on_engine = input("Would you like to turn the engine on?: ")
+
+        print("")
+        self.motor.engine_on()
+        time.sleep(1.5)
+        print("")
+        self.drive_car()
+
+
+# Här skapar du dina bilar
 bilar_lista = []
 bilar = {}
-bmw = Bil("BMW","blue",
+bmw = Bil("BMW", "blue",
           Performance(374, "M440i", 285, 4.3),
           Interior("4-seater", "black", "alcantara"))
 bilar_lista.append(bmw.brand)
@@ -142,66 +152,19 @@ print("")
 print("...")
 time.sleep(1.5)
 print("")
-#Här kör du din bil
+# Här kör du din bil
 
 
-
-
-print(f"Available cars: {bilar_lista}")
+print(f"Available cars: {bilar.keys()}")
 choose_car = input("Which car would you like to drive?: ")
-
+car = bilar[choose_car]
 print("")
-for cars in bilar:
-    if cars == choose_car:
-        print(f"The {choose_car} has now been chosen")
-        print("Entering"), (loading())
-        car = choose_car
 
-def chosen_car():
-    if choose_car in bilar:
-        turn_on_engine = input("Would you like to turn the engine on?: ")
-        if turn_on_engine == "Yes":
-            Motor.turned_on = True
-        print("")
-        bil1.engine_on()
-        time.sleep(1.5)
-        print("")
-        car.drive_car()
+print(f"The {choose_car} has now been chosen")
+print("Entering"), (loading())
 
-    else:
-        print(f"That car is not available")
-
-chosen_car()
+car.aktivitet()
 
 time.sleep(1)
 print("Thank you for driving!")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

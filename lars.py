@@ -66,7 +66,8 @@ class Motor:
             print(f"You can begin to drive...")
         else:
             self.turned_on = True
-            print("Engine is turning on.", loading())
+            print("Engine is turning on")
+            loading()
             time.sleep(1)
             print(f"Engine is now on")
             time.sleep(1)
@@ -105,23 +106,22 @@ class Bil:
         self.ratt.rattutslag = -degree
         self.ratt.i_did_turn()
         
-    def turn_forward(self, degree):
-        self.ratt.turn_right(0)
+    def turn_forward(self):
+        self.turn_right(0)
 
     def drive_car(self):
         self.turn_forward()
         time.sleep(1.5)
-        self.turn_right()
+        self.turn_right(90)
         time.sleep(1.5)
-        self.turn_left()
+        self.turn_left(90)
         time.sleep(1.5)
         print("")
         self.motor.engine_off()
 
     def aktivitet(self):
         turn_on_engine = input("Would you like to turn the engine on?: ")
-        if turn_on_engine == "Yes":
-            self.motor.turned_on = True
+
         print("")
         self.motor.engine_on()
         time.sleep(1.5)
