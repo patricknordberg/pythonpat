@@ -104,13 +104,27 @@ class Bil:
         self.ratt.rattutslag = 2
         print(f"You are now parked")
 
+    def drive_car(self):
+        self.turn_forward()
+        time.sleep(1.5)
+        self.turn_right()
+        time.sleep(1.5)
+        self.turn_left()
+        time.sleep(1.5)
+        self.turn_park()
+        time.sleep(1.5)
+        print("")
+        self.motor.engine_off()
+
 #Här skapar du dina bilar
-bilar = []
+bilar_lista = []
 bilar = {}
 bmw = Bil("BMW","blue",
           Performance(374, "M440i", 285, 4.3),
           Interior("4-seater", "black", "alcantara"))
-bilar.append(bmw.brand)
+bilar_lista.append(bmw.brand)
+bilar[bmw.brand] = bmw
+bil1 = bilar["BMW"]
 
 print("")
 print("...")
@@ -120,7 +134,9 @@ print("")
 volvo = Bil("Volvo", "white",
             Performance(256, "T5", 250, 7.5),
             Interior("5-seater", "black", "leather"))
-bilar.append(volvo.brand)
+bilar_lista.append(volvo.brand)
+bilar[volvo.brand] = volvo
+bil2 = bilar["Volvo"]
 
 print("")
 print("...")
@@ -128,27 +144,18 @@ time.sleep(1.5)
 print("")
 #Här kör du din bil
 
-def drive_car():
-    bilar.turn_forward()
-    time.sleep(1.5)
-    bilar.turn_right()
-    time.sleep(1.5)
-    bilar.turn_left()
-    time.sleep(1.5)
-    bilar.turn_park()
-    time.sleep(1.5)
-    print("")
-    bilar.motor.engine_off()
 
 
-print(f"Available cars: {bilar}")
+
+print(f"Available cars: {bilar_lista}")
 choose_car = input("Which car would you like to drive?: ")
 
 print("")
-for car in bilar:
-    if car == choose_car:
+for cars in bilar:
+    if cars == choose_car:
         print(f"The {choose_car} has now been chosen")
         print("Entering"), (loading())
+        car = choose_car
 
 def chosen_car():
     if choose_car in bilar:
@@ -156,18 +163,15 @@ def chosen_car():
         if turn_on_engine == "Yes":
             Motor.turned_on = True
         print("")
-        choose_car.engine_on()
+        bil1.engine_on()
         time.sleep(1.5)
         print("")
+        car.drive_car()
 
     else:
         print(f"That car is not available")
 
 chosen_car()
-
-
-
-
 
 time.sleep(1)
 print("Thank you for driving!")
