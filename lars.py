@@ -23,6 +23,14 @@ print(f"Initializing specs"), (loading())
 
 class Ratt:
     rattutslag = 0
+    
+    def i_did_turn(self):
+        if self.rattutslag == 0:
+            print("You are now facing forward")
+        elif self.rattutslag > 0:
+            print("You are now turning right")
+        else:
+            print("You are now turning left")
 
 class Interior:
     def __init__(self, seat: str, color: str, material: str):
@@ -87,22 +95,18 @@ class Bil:
         self.interior = interior
         self.turned_on: bool = False
 
+    
+    
+    def turn_right(self, degree):
+        self.ratt.rattutslag = degree
+        self.ratt.i_did_turn()
 
-    def turn_right(self):
-        self.ratt.rattutslag = 1
-        print(f"You are now turning right")
-
-    def turn_left(self):
-        self.ratt.rattutslag = -1
-        print(f"You are now turning left")
-
-    def turn_forward(self):
-        self.ratt.rattutslag = 0
-        print(f"You are now facing forward")
-
-    def turn_park(self):
-        self.ratt.rattutslag = 2
-        print(f"You are now parked")
+    def turn_left(self, degree):
+        self.ratt.rattutslag = -degree
+        self.ratt.i_did_turn()
+        
+    def turn_forward(self, degree):
+        self.ratt.turn_right(0)
 
     def drive_car(self):
         self.turn_forward()
@@ -110,8 +114,6 @@ class Bil:
         self.turn_right()
         time.sleep(1.5)
         self.turn_left()
-        time.sleep(1.5)
-        self.turn_park()
         time.sleep(1.5)
         print("")
         self.motor.engine_off()
@@ -156,19 +158,17 @@ print("")
 #Här kör du din bil
 
 
-def chosen_car(car: Bil):
-    car.aktivitet()
-
 
 print(f"Available cars: {bilar.keys()}")
 choose_car = input("Which car would you like to drive?: ")
-
+car = bilar[choose_car]
 print("")
-for car in bilar:
-    if car == choose_car:
-        print(f"The {choose_car} has now been chosen")
-        print("Entering"), (loading())
-        chosen_car(bilar[car])
+
+print(f"The {choose_car} has now been chosen")
+print("Entering"), (loading())
+
+car.aktivitet()
+
 
 
 
