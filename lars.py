@@ -61,11 +61,12 @@ class Motor:
     turned_on = False
     speed = 0
 
-    def status(self):
+    def status(self, action):
         if self.turned_on:
-            print(f"Motor is turned on and speed is {self.speed}")
+            print(f"Motor is turned on and I did {action}; speed is {self.speed}")
         else:
             print(f"Motor is off")
+
     def is_engine_on(self):
         return self.turned_on
 
@@ -78,7 +79,7 @@ class Motor:
             print("Engine is turning on")
             loading()
             time.sleep(1)
-            print(f"Engine is now on")
+            self.status("started")
             time.sleep(1)
             print(f"You can begin to drive")
 
@@ -86,7 +87,7 @@ class Motor:
         if self.turned_on:
             self.turned_on = False
             self.speed = 0
-            print("Engine is turning off."), (loading())
+            self.status("stopped")
             time.sleep(1)
             print(f"Engine is now off")
         else:
@@ -95,10 +96,12 @@ class Motor:
     def gasa(self):
         if ( self.turned_on):
             self.speed += 10
+        self.status("gasade")
 
     def bromsa(self):
         if (self.turned_on):
             self.speed -= 10
+        self.status("bromsade")
 
 class Bil:
     ratt = Ratt()
@@ -113,7 +116,8 @@ class Bil:
         self.interior = interior
         self.turned_on: bool = False
 
-    
+    def status(self):
+        print("")
     
     def turn_right(self, degree):
         self.ratt.rattutslag = degree
