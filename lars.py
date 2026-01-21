@@ -137,9 +137,9 @@ class Bil:
         self.ratt.i_did_turn()
 
     def drive_take_over(self):
-        self.turn_right(10)
-        self.motor.gasa()
         self.turn_left(10)
+        self.motor.gasa()
+        self.turn_right(10)
         self.motor.bromsa()
         print("I did take over")
 
