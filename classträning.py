@@ -152,30 +152,35 @@ class Bil:
         print("")
         self.motor.bromsa()
 
-    def drive_to_los_angeles(self):
-        self.motor.gasa()
-        self.turn_left(45)
-        self.turn_forward()
-        print("Driving for 2,5h")
-        self.turn_right(45)
-        print("You have now arrived in Los Angeles")
-        self.motor.bromsa()
+    def drive_to_city(self, city):
+        if city == "Los Angeles":
+            self.motor.gasa()
+            self.turn_left(45)
+            self.turn_forward()
+            print("Driving for 2,5h")
+            self.turn_right(45)
+            print("You have now arrived in Los Angeles")
+            self.motor.bromsa()
 
-    def drive_to_new_york(self):
-        self.motor.gasa()
-        self.turn_right(45)
-        print("Driving for 12h")
-        self.turn_left(45)
-        print("You have now arrived in New York")
-        self.motor.bromsa()
+        elif city == "New York":
+            self.motor.gasa()
+            self.turn_right(45)
+            print("Driving for 12h")
+            self.turn_left(45)
+            print("You have now arrived in New York")
+            self.motor.bromsa()
 
-    def drive_to_chicago(self):
-        self.motor.gasa()
-        self.turn_forward()
-        print("Driving for 20 min")
-        self.turn_left(90)
-        print("You have now arrived in Chicago")
-        self.motor.bromsa()
+        elif city == "Chicago":
+            self.motor.gasa()
+            self.turn_forward()
+            print("Driving for 20 min")
+            self.turn_left(90)
+            print("You have now arrived in Chicago")
+            self.motor.bromsa()
+
+
+
+
 
 
     def destination(self):
@@ -183,14 +188,7 @@ class Bil:
         print(f"Destinations: {cities}")
         city = input("Destination: ")
         if city in cities:
-            if city == "Los Angeles" or city == "Los angeles":
-                self.drive_to_los_angeles()
-
-            elif city == "New York" or city == "New york":
-                self.drive_to_new_york()
-
-            elif city == "Chicago":
-                self.drive_to_chicago()
+            self.drive_to_city(city)
 
 
 
