@@ -24,9 +24,9 @@ class Ratt:
         if self.rattutslag == 0:
             print("You are now facing forward")
         elif self.rattutslag > 0:
-            print("You are now turning right")
+            print(f"You are now turning right by {self.rattutslag}")
         else:
-            print("You are now turning left")
+            print(f"You are now turning left by {-self.rattutslag}")
 
 
 class Interior:
@@ -58,6 +58,16 @@ class Performance:
 
 class Motor:
     turned_on = False
+    speed = 0
+
+    def status(self, action):
+        if self.turned_on:
+            print(f"Motor is turned on and I am {action}; speed is {self.speed}")
+        else:
+            print(f"Motor is off")
+
+    def is_engine_on(self):
+        return self.turned_on
 
     def engine_on(self):
         if self.turned_on:
@@ -68,19 +78,31 @@ class Motor:
             print("Engine is turning on")
             loading()
             time.sleep(1)
-            print(f"Engine is now on")
+            self.status("started")
             time.sleep(1)
             print(f"You can begin to drive")
 
     def engine_off(self):
         if self.turned_on:
             self.turned_on = False
-            print("Engine is turning off."), (loading())
-
+            self.speed = 0
+            self.status("stopped")
             time.sleep(1)
             print(f"Engine is now off")
         else:
             print(f"The engine is already off...")
+
+    def gasa(self):
+        if (self.turned_on):
+            self.speed += 10
+        self.status("accelerating")
+
+    def bromsa(self):
+        if (self.turned_on):
+            self.speed -= 10
+            self.status("breaking")
+        elif self.speed == 0:
+            self.status("stopped")
 
 
 class Bil:
@@ -95,36 +117,101 @@ class Bil:
         self.interior = interior
         self.turned_on: bool = False
 
+    def status(self):
+        print("")
+
     def turn_right(self, degree):
         self.ratt.rattutslag = degree
+        time.sleep(1.5)
         self.ratt.i_did_turn()
+        self.turn_forward()
 
     def turn_left(self, degree):
         self.ratt.rattutslag = -degree
+        time.sleep(1.5)
         self.ratt.i_did_turn()
+        self.turn_forward()
 
     def turn_forward(self):
-        self.turn_right(0)
+        self.ratt.rattutslag = 0
+        time.sleep(1.5)
+        self.ratt.i_did_turn()
+
+    def drive_take_over(self):
+        self.turn_left(10)
+        self.motor.gasa()
+        self.turn_right(10)
+        self.motor.bromsa()
+        print("I did take over")
 
     def drive_car(self):
-        self.turn_forward()
-        time.sleep(1.5)
+        self.motor.gasa()
         self.turn_right(90)
-        time.sleep(1.5)
+        self.drive_take_over()
         self.turn_left(90)
-        time.sleep(1.5)
         print("")
+        self.motor.bromsa()
+
+    def drive_to_los_angeles(self):
+        self.motor.gasa()
+        self.turn_left(45)
+        self.turn_forward()
+        print("Driving for 2,5h")
+        self.turn_right(45)
+        print("You have now arrived in Los Angeles")
+        self.motor.bromsa()
+
+    def drive_to_new_york(self):
+        self.motor.gasa()
+        self.turn_right(45)
+        print("Driving for 12h")
+        self.turn_left(45)
+        print("You have now arrived in New York")
+        self.motor.bromsa()
+
+    def drive_to_chicago(self):
+        self.motor.gasa()
+        self.turn_forward()
+        print("Driving for 20 min")
+        self.turn_left(90)
+        print("You have now arrived in Chicago")
+        self.motor.bromsa()
+
+
+    def destination(self):
+        cities = ["Los Angeles", "New York", "Chicago"]
+        print(f"Destinations: {cities}")
+        city = input("Destination: ")
+        if city in cities:
+            if city == "Los Angeles" or city == "Los angeles":
+                self.drive_to_los_angeles()
+
+            elif city == "New York" or city == "New york":
+                self.drive_to_new_york()
+
+            elif city == "Chicago":
+                self.drive_to_chicago()
+
+
+
+
+
+    def finished_driving(self):
         self.motor.engine_off()
+        print("Thank you for driving!")
 
     def aktivitet(self):
         turn_on_engine = input("Would you like to turn the engine on?: ")
+        if turn_on_engine:
+            if self.motor.is_engine_on():
+                print("Motor is already turned on")
+            else:
+                self.motor.engine_on()
+                time.sleep(1.5)
 
-        print("")
-        self.motor.engine_on()
-        time.sleep(1.5)
-        print("")
-        self.drive_car()
-
+            print("")
+            self.drive_car()
+            self.destination()
 
 # Här skapar du dina bilar
 bilar_lista = []
@@ -155,7 +242,7 @@ print("")
 # Här kör du din bil
 
 
-print(f"Available cars: {bilar.keys()}")
+print(f"Available cars: {bilar_lista}")
 choose_car = input("Which car would you like to drive?: ")
 car = bilar[choose_car]
 print("")
@@ -166,5 +253,4 @@ print("Entering"), (loading())
 car.aktivitet()
 
 time.sleep(1)
-print("Thank you for driving!")
-
+car.finished_driving()
