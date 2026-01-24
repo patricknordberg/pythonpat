@@ -178,21 +178,12 @@ class Bil:
             print("You have now arrived in Chicago")
             self.motor.bromsa()
 
-
-
-
-
-
     def destination(self):
         cities = ["Los Angeles", "New York", "Chicago"]
         print(f"Destinations: {cities}")
         city = input("Destination: ")
         if city in cities:
             self.drive_to_city(city)
-
-
-
-
 
     def finished_driving(self):
         self.motor.engine_off()
@@ -210,6 +201,60 @@ class Bil:
             print("")
             self.drive_car()
             self.destination()
+
+
+
+
+# LARS start
+
+class Destinations:
+
+    def drive_to_LosAngeles(bil):
+        bil.motor.gasa()
+        bil.turn_left(45)
+        bil.turn_forward()
+        print("Driving for 2,5h")
+        bil.turn_right(45)
+        print("You have now arrived in Los Angeles")
+        bil.motor.bromsa()
+
+    def drive_to_Chicago(bil):
+        bil.motor.gasa()
+        bil.turn_forward()
+        print("Driving for 20 min")
+        bil.turn_left(90)
+        print("You have now arrived in Chicago")
+        bil.motor.bromsa()
+
+    def drive_to_NewYork(bil):
+        bil.motor.gasa()
+        bil.turn_right(45)
+        print("Driving for 12h")
+        bil.turn_left(45)
+        print("You have now arrived in New York")
+        bil.motor.bromsa()
+
+    destinationMap = {
+        "Los Angeles": drive_to_LosAngeles,
+        "Chicago": drive_to_Chicago,
+        "New York": drive_to_NewYork
+    }
+
+
+    def destinationLars(self):
+        destinations = Destinations()
+        cities = destinations.destinationMap.keys()
+        print(f"Destinations: {cities}")
+        city = input("Destination: ")
+        if city in cities:
+            destinations.destinationMap[city](self)
+
+    # LARS end
+
+
+
+
+
 
 # Här skapar du dina bilar
 bilar_lista = []
@@ -249,6 +294,8 @@ print(f"The {choose_car} has now been chosen")
 print("Entering"), (loading())
 
 car.aktivitet()
+
+car.destinationLars()
 
 time.sleep(1)
 car.finished_driving()
