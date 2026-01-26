@@ -241,13 +241,12 @@ class Destinations:
     }
 
 
-    def destinationLars(self):
-        destinations = Destinations()
-        cities = destinations.destinationMap.keys()
+    def destinationLars(self, car: Bil):
+        cities = self.destinationMap.keys()
         print(f"Destinations: {cities}")
         city = input("Destination: ")
         if city in cities:
-            destinations.destinationMap[city](self)
+            self.destinationMap[city](car)
 
     # LARS end
 
@@ -295,7 +294,8 @@ print("Entering"), (loading())
 
 car.aktivitet()
 
-car.destinationLars()
+destinations = Destinations()
+destinations.destinationLars(car)
 
 time.sleep(1)
 car.finished_driving()
