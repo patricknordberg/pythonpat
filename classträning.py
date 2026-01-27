@@ -211,49 +211,7 @@ class Bil:
             self.drive_car()
             self.destination()
 
-class Destinations:
-
-    def drive_to_LosAngeles(bil):
-        bil.motor.gasa()
-        bil.turn_left(45)
-        bil.turn_forward()
-        print("Driving for 2,5h")
-        bil.turn_right(45)
-        print("You have now arrived in Los Angeles")
-        bil.motor.bromsa()
-
-    def drive_to_NewYork(bil):
-        bil.motor.gasa()
-        bil.turn_right(45)
-        print("Driving for 12h")
-        bil.turn_left(45)
-        print("You have now arrived in New York")
-        bil.motor.bromsa()
-
-    def drive_to_Chicago(bil):
-        bil.motor.gasa()
-        bil.turn_forward()
-        print("Driving for 20 min")
-        bil.turn_left(90)
-        print("You have now arrived in Chicago")
-        bil.motor.bromsa()
-
-    destinationMap = {
-        "Los Angeles": drive_to_LosAngeles,
-        "New York": drive_to_NewYork,
-        "Chicago": drive_to_Chicago
-    }
-
-    def destination_pat(self):
-        destination = Destinations()
-        cities = destination.destinationMap.keys()
-        print(f"Destinations: {cities}")
-        city = input("Destination: ")
-        if city in cities:
-            destination.destinationMap[city](self)
-
 # Här skapar du dina bilar
-
 bilar_lista = []
 bilar = {}
 bmw = Bil("BMW", "blue",
@@ -262,7 +220,6 @@ bmw = Bil("BMW", "blue",
 bilar_lista.append(bmw.brand)
 bilar[bmw.brand] = bmw
 bil1 = bilar["BMW"]
-
 
 print("")
 print("...")
@@ -280,10 +237,7 @@ print("")
 print("...")
 time.sleep(1.5)
 print("")
-
-
 # Här kör du din bil
-
 
 
 print(f"Available cars: {bilar_lista}")
@@ -295,7 +249,6 @@ print(f"The {choose_car} has now been chosen")
 print("Entering"), (loading())
 
 car.aktivitet()
+
 time.sleep(1)
 car.finished_driving()
-
-
