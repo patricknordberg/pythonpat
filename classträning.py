@@ -10,7 +10,7 @@ def loading():
         else:
             print(".", end="")
             load_time += "."
-            time.sleep(1)
+            time.sleep(0.3)
         print("")
 
 
@@ -77,9 +77,9 @@ class Motor:
             self.turned_on = True
             print("Engine is turning on")
             loading()
-            time.sleep(1)
+            time.sleep(0.8)
             self.status("started")
-            time.sleep(1)
+            time.sleep(0.8)
             print(f"You can begin to drive")
 
     def engine_off(self):
@@ -87,7 +87,7 @@ class Motor:
             self.turned_on = False
             self.speed = 0
             self.status("stopped")
-            time.sleep(1)
+            time.sleep(0.8)
             print(f"Engine is now off")
         else:
             print(f"The engine is already off...")
@@ -122,19 +122,19 @@ class Bil:
 
     def turn_right(self, degree):
         self.ratt.rattutslag = degree
-        time.sleep(1.5)
+        time.sleep(0.8)
         self.ratt.i_did_turn()
         self.turn_forward()
 
     def turn_left(self, degree):
         self.ratt.rattutslag = -degree
-        time.sleep(1.5)
+        time.sleep(0.8)
         self.ratt.i_did_turn()
         self.turn_forward()
 
     def turn_forward(self):
         self.ratt.rattutslag = 0
-        time.sleep(1.5)
+        time.sleep(0.8)
         self.ratt.i_did_turn()
 
     def drive_take_over(self):
@@ -153,13 +153,6 @@ class Bil:
         self.motor.bromsa()
 
 
-    def destination(self):
-        cities = ["Los Angeles", "New York", "Chicago"]
-        print(f"Destinations: {cities}")
-        city = input("Destination: ")
-        if city in cities:
-            self.drive_to_city(city)
-
     def finished_driving(self):
         self.motor.engine_off()
         print("Thank you for driving!")
@@ -171,11 +164,10 @@ class Bil:
                 print("Motor is already turned on")
             else:
                 self.motor.engine_on()
-                time.sleep(1.5)
+                time.sleep(0.8)
 
             print("")
             self.drive_car()
-            self.destination()
 
 
 class Destinations:
@@ -213,7 +205,7 @@ class Destinations:
 
     def destination_pat(self, car: Bil):
 
-        cities = destination.destinationMap.keys()
+        cities = list(destination.destinationMap.keys())
         print(f"Destinations: {cities}")
         city = input("Destination: ")
         if city in cities:
@@ -223,7 +215,6 @@ class Destinations:
 # Här skapar du dina bilar
 
 class Garage:
-    bilar_lista = []
     bilar = {}
 
     def __init__(self):
@@ -238,8 +229,6 @@ class Garage:
                     Interior("5-seater", "black", "leather"))
         self.bilar[volvo.brand] = volvo
 
-        for car in self.bilar:
-            self.bilar_lista.append(car.brand)
 
     def choose_car(self, car_brand):
         return self.bilar[car_brand]
@@ -249,7 +238,7 @@ class Garage:
 
 garage = Garage()
 
-print(f"Available cars: {garage.bilar_lista}")
+print(f"Available cars: {list(garage.bilar)}")
 choose_car = input("Which car would you like to drive?: ")
 car = garage.choose_car(choose_car)
 print("")
@@ -259,6 +248,7 @@ print("Entering"), (loading())
 
 car.aktivitet()
 destination = Destinations()
+destination.destination_pat(car)
 
 time.sleep(1)
 car.finished_driving()
