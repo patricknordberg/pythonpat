@@ -1,6 +1,5 @@
 import time
 
-
 def loading():
     load_time = "."
     while True:
@@ -12,10 +11,8 @@ def loading():
             time.sleep(0.3)
     print("")
 
-
 print(f"Initializing specs", end = "")
 loading()
-
 
 class Ratt:
     rattutslag = 0
@@ -144,30 +141,16 @@ class Bil:
         self.motor.bromsa()
         print("I did take over")
 
-    def drive_car(self):
-        self.motor.gasa()
-        self.turn_right(90)
-        self.drive_take_over()
-        self.turn_left(90)
-        print("")
-        self.motor.bromsa()
+    def drive_car(self, destination):
+        destination.destination_pat(self)
+
 
 
     def finished_driving(self):
         self.motor.engine_off()
         print("Thank you for driving!")
 
-    def aktivitet(self):
-        turn_on_engine = input("Would you like to turn the engine on?: ")
-        if turn_on_engine:
-            if self.motor.is_engine_on():
-                print("Motor is already turned on")
-            else:
-                self.motor.engine_on()
-                time.sleep(0.8)
 
-            print("")
-            self.drive_car()
 
 
 class Destinations:
@@ -238,7 +221,20 @@ class Garage:
 
 #Skapa en class där resor sker
 class Resa:
-    print("")
+    def __init__(self, bil: Bil, destination: Destinations):
+        self.bil = bil
+        self.destination = destination
+
+    def activity1(self):
+        turn_on_engine = input("Would you like to turn the engine on?: ")
+        if turn_on_engine == "Yes":
+            if car.motor.is_engine_on():
+                print("Motor is already turned on")
+            else:
+                car.motor.engine_on()
+                time.sleep(0.8)
+        print("")
+        car.drive_car(self.destination)
 
 # Här kör du din bil
 
@@ -253,9 +249,12 @@ print(f"The {choose_car} has now been chosen")
 print("Entering", end = "")
 loading()
 
-car.aktivitet()
+
 destination = Destinations()
-destination.destination_pat(car)
+
+resa = Resa(car, destination)
+resa.activity1()
+
 
 time.sleep(1)
 car.finished_driving()
