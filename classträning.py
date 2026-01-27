@@ -152,36 +152,6 @@ class Bil:
         print("")
         self.motor.bromsa()
 
-    def drive_to_city(self, city):
-        if city == "Los Angeles":
-            self.motor.gasa()
-            self.turn_left(45)
-            self.turn_forward()
-            print("Driving for 2,5h")
-            self.turn_right(45)
-            print("You have now arrived in Los Angeles")
-            self.motor.bromsa()
-
-        elif city == "New York":
-            self.motor.gasa()
-            self.turn_right(45)
-            print("Driving for 12h")
-            self.turn_left(45)
-            print("You have now arrived in New York")
-            self.motor.bromsa()
-
-        elif city == "Chicago":
-            self.motor.gasa()
-            self.turn_forward()
-            print("Driving for 20 min")
-            self.turn_left(90)
-            print("You have now arrived in Chicago")
-            self.motor.bromsa()
-
-
-
-
-
 
     def destination(self):
         cities = ["Los Angeles", "New York", "Chicago"]
@@ -189,10 +159,6 @@ class Bil:
         city = input("Destination: ")
         if city in cities:
             self.drive_to_city(city)
-
-
-
-
 
     def finished_driving(self):
         self.motor.engine_off()
@@ -211,36 +177,89 @@ class Bil:
             self.drive_car()
             self.destination()
 
+
+class Destinations:
+
+    def drive_to_LosAngeles(bil):
+        bil.motor.gasa()
+        bil.turn_left(45)
+        bil.turn_forward()
+        print("Driving for 2,5h")
+        bil.turn_right(45)
+        print("You have now arrived in Los Angeles")
+        bil.motor.bromsa()
+
+    def drive_to_NewYork(bil):
+        bil.motor.gasa()
+        bil.turn_right(45)
+        print("Driving for 12h")
+        bil.turn_left(45)
+        print("You have now arrived in New York")
+        bil.motor.bromsa()
+
+    def drive_to_Chicago(bil):
+        bil.motor.gasa()
+        bil.turn_forward()
+        print("Driving for 20 min")
+        bil.turn_left(90)
+        print("You have now arrived in Chicago")
+        bil.motor.bromsa()
+
+    destinationMap = {
+        "Los Angeles": drive_to_LosAngeles,
+        "New York": drive_to_NewYork,
+        "Chicago": drive_to_Chicago
+    }
+
+    def destination_pat(self, car: Bil):
+
+        cities = destination.destinationMap.keys()
+        print(f"Destinations: {cities}")
+        city = input("Destination: ")
+        if city in cities:
+            self.destinationMap[city](car)
+
+
 # Här skapar du dina bilar
-bilar_lista = []
-bilar = {}
-bmw = Bil("BMW", "blue",
-          Performance(374, "M440i", 285, 4.3),
-          Interior("4-seater", "black", "alcantara"))
-bilar_lista.append(bmw.brand)
-bilar[bmw.brand] = bmw
-bil1 = bilar["BMW"]
 
-print("")
-print("...")
-time.sleep(1.5)
-print("")
+class Garage:
+    bilar_lista = []
+    bilar = {}
 
-volvo = Bil("Volvo", "white",
-            Performance(256, "T5", 250, 7.5),
-            Interior("5-seater", "black", "leather"))
-bilar_lista.append(volvo.brand)
-bilar[volvo.brand] = volvo
-bil2 = bilar["Volvo"]
+    bmw = Bil("BMW", "blue",
+              Performance(374, "M440i", 285, 4.3),
+              Interior("4-seater", "black", "alcantara"))
+    bilar_lista.append(bmw.brand)
+    bilar[bmw.brand] = bmw
+    bil1 = bilar["BMW"]
 
-print("")
-print("...")
-time.sleep(1.5)
-print("")
+    def car_bmw(bil):
+        bil.engine_on()
+        bil.drive_car()
+
+
+
+
+    volvo = Bil("Volvo", "white",
+                Performance(256, "T5", 250, 7.5),
+                Interior("5-seater", "black", "leather"))
+    bilar_lista.append(volvo.brand)
+    bilar[volvo.brand] = volvo
+    bil2 = bilar["Volvo"]
+
+    def car_volvo(bil):
+        bil.engine_on()
+        bil.drive_car()
+
+
+bilar = {
+    "BMW": garage.car_bmw,
+
+}
 # Här kör du din bil
 
 
-print(f"Available cars: {bilar_lista}")
+print(f"Available cars: {bilar_lista(keys)}")
 choose_car = input("Which car would you like to drive?: ")
 car = bilar[choose_car]
 print("")
@@ -249,6 +268,7 @@ print(f"The {choose_car} has now been chosen")
 print("Entering"), (loading())
 
 car.aktivitet()
+destination = Destinations()
 
 time.sleep(1)
 car.finished_driving()
