@@ -238,6 +238,7 @@ class Garage:
 
 #Skapa en class där resor sker
 class Resa:
+    print("")
 
 # Här kör du din bil
 
