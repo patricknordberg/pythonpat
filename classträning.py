@@ -226,42 +226,32 @@ class Garage:
     bilar_lista = []
     bilar = {}
 
-    bmw = Bil("BMW", "blue",
-              Performance(374, "M440i", 285, 4.3),
-              Interior("4-seater", "black", "alcantara"))
-    bilar_lista.append(bmw.brand)
-    bilar[bmw.brand] = bmw
-    bil1 = bilar["BMW"]
+    def __init__(self):
 
-    def car_bmw(bil):
-        bil.engine_on()
-        bil.drive_car()
+        bmw = Bil("BMW", "blue",
+                  Performance(374, "M440i", 285, 4.3),
+                  Interior("4-seater", "black", "alcantara"))
+        self.bilar[bmw.brand] = bmw
 
+        volvo = Bil("Volvo", "white",
+                    Performance(256, "T5", 250, 7.5),
+                    Interior("5-seater", "black", "leather"))
+        self.bilar[volvo.brand] = volvo
 
+        for car in self.bilar:
+            self.bilar_lista.append(car.brand)
 
-
-    volvo = Bil("Volvo", "white",
-                Performance(256, "T5", 250, 7.5),
-                Interior("5-seater", "black", "leather"))
-    bilar_lista.append(volvo.brand)
-    bilar[volvo.brand] = volvo
-    bil2 = bilar["Volvo"]
-
-    def car_volvo(bil):
-        bil.engine_on()
-        bil.drive_car()
+    def choose_car(self, car_brand):
+        return self.bilar[car_brand]
 
 
-bilar = {
-    "BMW": garage.car_bmw,
-
-}
 # Här kör du din bil
 
+garage = Garage()
 
-print(f"Available cars: {bilar_lista(keys)}")
+print(f"Available cars: {garage.bilar_lista}")
 choose_car = input("Which car would you like to drive?: ")
-car = bilar[choose_car]
+car = garage.choose_car(choose_car)
 print("")
 
 print(f"The {choose_car} has now been chosen")
