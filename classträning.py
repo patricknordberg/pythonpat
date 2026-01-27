@@ -5,16 +5,16 @@ def loading():
     load_time = "."
     while True:
         if load_time == "....":
-            load_time = "."
             break
         else:
-            print(".", end="")
+            print(".", end = "")
             load_time += "."
             time.sleep(0.3)
-        print("")
+    print("")
 
 
-print(f"Initializing specs"), (loading())
+print(f"Initializing specs", end = "")
+loading()
 
 
 class Ratt:
@@ -75,7 +75,7 @@ class Motor:
             print(f"You can begin to drive...")
         else:
             self.turned_on = True
-            print("Engine is turning on")
+            print("Engine is turning on", end = "")
             loading()
             time.sleep(0.8)
             self.status("started")
@@ -219,20 +219,25 @@ class Garage:
 
     def __init__(self):
 
-        bmw = Bil("BMW", "blue",
+        bil = Bil("BMW", "blue",
                   Performance(374, "M440i", 285, 4.3),
                   Interior("4-seater", "black", "alcantara"))
-        self.bilar[bmw.brand] = bmw
+        self.bilar[bil.brand] = bil
 
-        volvo = Bil("Volvo", "white",
+        print("")
+
+        bil = Bil("Volvo", "white",
                     Performance(256, "T5", 250, 7.5),
                     Interior("5-seater", "black", "leather"))
-        self.bilar[volvo.brand] = volvo
+        self.bilar[bil.brand] = bil
 
+        print("")
 
     def choose_car(self, car_brand):
         return self.bilar[car_brand]
 
+#Skapa en class där resor sker
+class Resa:
 
 # Här kör du din bil
 
@@ -244,7 +249,8 @@ car = garage.choose_car(choose_car)
 print("")
 
 print(f"The {choose_car} has now been chosen")
-print("Entering"), (loading())
+print("Entering", end = "")
+loading()
 
 car.aktivitet()
 destination = Destinations()
